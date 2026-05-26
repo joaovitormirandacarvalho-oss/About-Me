@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>João Vitor Carvalho — Customer Service & CX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:   #0D2B4E;
+    --teal:   #2A9D8F;
+    --teal2:  #3BBFAF;
+    --sand:   #F4F0EA;
+    --warm:   #FAF8F5;
+    --dark:   #1A1A2E;
+    --mid:    #4A5568;
+    --light:  #8A9BB0;
+    --white:  #FFFFFF;
+    --card:   #FFFFFF;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm);
+    color: var(--dark);
+    overflow-x: hidden;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--sand); }
+  ::-webkit-scrollbar-thumb { background: var(--teal); border-radius: 2px; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 60px;
+    background: rgba(250,248,245,0.85);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(13,43,78,0.08);
+    transition: all .3s;
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 1.1rem;
+    color: var(--navy); letter-spacing: -0.02em;
+  }
+  .nav-logo span { color: var(--teal); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-size: .82rem; font-weight: 500; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--mid);
+    text-decoration: none; transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--teal); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 120px 60px 80px;
+    gap: 60px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -200px; right: -200px;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(42,157,143,.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(42,157,143,.1); border: 1px solid rgba(42,157,143,.25);
+    border-radius: 100px; padding: 6px 16px;
+    font-size: .78rem; font-weight: 500; color: var(--teal);
+    letter-spacing: .05em; text-transform: uppercase;
+    margin-bottom: 28px;
+    animation: fadeUp .6s ease both;
+  }
+  .hero-tag::before {
+    content: ''; width: 6px; height: 6px;
+    background: var(--teal); border-radius: 50%;
+    animation: pulse 2s ease infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: .4; transform: scale(1.4); }
+  }
+
+  .hero-name {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.8rem, 5vw, 4.2rem);
+    font-weight: 800; line-height: 1.05;
+    color: var(--navy); letter-spacing: -0.03em;
+    animation: fadeUp .7s .1s ease both;
+  }
+  .hero-name em { color: var(--teal); font-style: normal; }
+
+  .hero-subtitle {
+    margin-top: 18px;
+    font-size: 1.05rem; font-weight: 300; color: var(--mid);
+    line-height: 1.7; max-width: 480px;
+    animation: fadeUp .7s .2s ease both;
+  }
+
+  .hero-cta {
+    margin-top: 40px; display: flex; gap: 16px; flex-wrap: wrap;
+    animation: fadeUp .7s .35s ease both;
+  }
+  .btn {
+    padding: 13px 28px; border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .88rem; font-weight: 500; cursor: pointer;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+    transition: all .22s;
+  }
+  .btn-primary {
+    background: var(--navy); color: var(--white);
+    border: 1.5px solid var(--navy);
+  }
+  .btn-primary:hover { background: var(--teal); border-color: var(--teal); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent; color: var(--navy);
+    border: 1.5px solid rgba(13,43,78,.25);
+  }
+  .btn-outline:hover { border-color: var(--teal); color: var(--teal); transform: translateY(-2px); }
+
+  .hero-contact {
+    margin-top: 48px;
+    display: flex; flex-direction: column; gap: 8px;
+    animation: fadeUp .7s .45s ease both;
+  }
+  .hero-contact a {
+    font-size: .82rem; color: var(--light); text-decoration: none;
+    display: flex; align-items: center; gap: 8px;
+    transition: color .2s;
+  }
+  .hero-contact a:hover { color: var(--teal); }
+
+  /* Hero right: metrics card */
+  .hero-card {
+    background: var(--card);
+    border-radius: 20px;
+    border: 1px solid rgba(13,43,78,.08);
+    padding: 40px;
+    box-shadow: 0 20px 60px rgba(13,43,78,.08), 0 4px 16px rgba(13,43,78,.04);
+    animation: fadeUp .8s .15s ease both;
+    position: relative; overflow: hidden;
+  }
+  .hero-card::after {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--teal), var(--navy));
+  }
+  .card-label {
+    font-size: .72rem; font-weight: 600; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--light);
+    margin-bottom: 24px;
+  }
+  .metrics-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 28px 32px;
+  }
+  .metric-item {}
+  .metric-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.2rem; font-weight: 800;
+    color: var(--navy); letter-spacing: -0.04em;
+    line-height: 1;
+    counter-reset: num;
+  }
+  .metric-num .accent { color: var(--teal); }
+  .metric-desc {
+    font-size: .78rem; color: var(--light);
+    margin-top: 4px; font-weight: 400;
+  }
+  .card-footer {
+    margin-top: 28px; padding-top: 24px;
+    border-top: 1px solid rgba(13,43,78,.07);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .card-footer-text { font-size: .78rem; color: var(--light); }
+  .card-badge {
+    background: rgba(42,157,143,.1);
+    border: 1px solid rgba(42,157,143,.2);
+    border-radius: 100px; padding: 4px 12px;
+    font-size: .72rem; font-weight: 600; color: var(--teal);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .reveal {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity .65s ease, transform .65s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ── SECTIONS ── */
+  section { padding: 100px 60px; }
+
+  .section-tag {
+    font-size: .72rem; font-weight: 600; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--teal);
+    margin-bottom: 12px; display: block;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 800; color: var(--navy);
+    letter-spacing: -0.03em; line-height: 1.15;
+    margin-bottom: 16px;
+  }
+  .section-sub {
+    font-size: 1rem; color: var(--mid); font-weight: 300;
+    max-width: 560px; line-height: 1.7;
+  }
+
+  /* ── SOBRE ── */
+  #sobre { background: var(--warm); }
+  .sobre-grid {
+    display: grid; grid-template-columns: 1fr 1.3fr;
+    gap: 80px; align-items: start; margin-top: 60px;
+  }
+  .sobre-text p {
+    font-size: .98rem; color: var(--mid); line-height: 1.8;
+    margin-bottom: 18px; font-weight: 300;
+  }
+  .sobre-text strong { color: var(--navy); font-weight: 500; }
+  .sobre-pills {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-top: 28px;
+  }
+  .pill {
+    background: var(--sand);
+    border: 1px solid rgba(13,43,78,.1);
+    border-radius: 100px; padding: 6px 16px;
+    font-size: .8rem; color: var(--mid); font-weight: 400;
+  }
+  .sobre-highlights { display: flex; flex-direction: column; gap: 16px; }
+  .highlight-card {
+    background: var(--white); border-radius: 14px;
+    border: 1px solid rgba(13,43,78,.07);
+    padding: 24px 28px;
+    display: flex; align-items: flex-start; gap: 18px;
+    box-shadow: 0 4px 16px rgba(13,43,78,.04);
+    transition: transform .25s, box-shadow .25s;
+  }
+  .highlight-card:hover {
+    transform: translateX(6px);
+    box-shadow: 0 8px 28px rgba(13,43,78,.09);
+  }
+  .hl-icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: rgba(42,157,143,.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; flex-shrink: 0;
+  }
+  .hl-title { font-weight: 600; font-size: .92rem; color: var(--navy); margin-bottom: 4px; }
+  .hl-text  { font-size: .82rem; color: var(--mid); line-height: 1.6; }
+
+  /* ── EXPERIÊNCIA ── */
+  #experiencia { background: var(--sand); }
+  .exp-list { margin-top: 60px; display: flex; flex-direction: column; gap: 0; }
+  .exp-item {
+    display: grid; grid-template-columns: 200px 1fr;
+    gap: 40px; padding: 40px 0;
+    border-bottom: 1px solid rgba(13,43,78,.08);
+  }
+  .exp-item:last-child { border-bottom: none; }
+  .exp-period { font-size: .82rem; color: var(--light); line-height: 1.6; padding-top: 4px; }
+  .exp-period strong { display: block; color: var(--mid); font-weight: 500; margin-bottom: 4px; }
+  .exp-header { margin-bottom: 12px; }
+  .exp-role {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.2rem; font-weight: 700;
+    color: var(--navy); letter-spacing: -0.02em;
+  }
+  .exp-company {
+    font-size: .88rem; color: var(--teal); font-weight: 500; margin-top: 4px;
+  }
+  .exp-bullets { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+  .exp-bullet {
+    display: flex; gap: 10px; font-size: .88rem;
+    color: var(--mid); line-height: 1.6;
+  }
+  .exp-bullet::before {
+    content: '›'; color: var(--teal); font-weight: 700;
+    font-size: .9rem; flex-shrink: 0; margin-top: 1px;
+  }
+  .exp-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .exp-tag {
+    background: rgba(42,157,143,.08);
+    border: 1px solid rgba(42,157,143,.18);
+    border-radius: 6px; padding: 3px 10px;
+    font-size: .72rem; color: var(--teal); font-weight: 500;
+  }
+
+  /* ── NÚMEROS ── */
+  #numeros { background: var(--navy); }
+  #numeros .section-title { color: var(--white); }
+  #numeros .section-sub  { color: rgba(255,255,255,.5); }
+  #numeros .section-tag  { color: var(--teal2); }
+  .numeros-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 2px; margin-top: 60px;
+    border-radius: 16px; overflow: hidden;
+  }
+  .numero-card {
+    background: rgba(255,255,255,.04);
+    padding: 36px 28px; text-align: center;
+    border: 1px solid rgba(255,255,255,.06);
+    transition: background .25s;
+  }
+  .numero-card:hover { background: rgba(42,157,143,.12); }
+  .numero-val {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.4rem; font-weight: 800;
+    color: var(--teal2); letter-spacing: -0.04em;
+  }
+  .numero-label {
+    font-size: .78rem; color: rgba(255,255,255,.45);
+    margin-top: 8px; line-height: 1.4;
+  }
+
+  /* ── HABILIDADES ── */
+  #habilidades { background: var(--warm); }
+  .skills-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px; margin-top: 60px;
+  }
+  .skill-card {
+    background: var(--white); border-radius: 16px;
+    border: 1px solid rgba(13,43,78,.07);
+    padding: 32px; 
+    box-shadow: 0 2px 12px rgba(13,43,78,.04);
+    transition: transform .25s, box-shadow .25s;
+  }
+  .skill-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(13,43,78,.1);
+  }
+  .skill-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: linear-gradient(135deg, rgba(42,157,143,.15), rgba(13,43,78,.08));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; margin-bottom: 20px;
+  }
+  .skill-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem; font-weight: 700;
+    color: var(--navy); margin-bottom: 12px;
+  }
+  .skill-items { display: flex; flex-wrap: wrap; gap: 7px; }
+  .skill-item {
+    background: var(--sand);
+    border-radius: 6px; padding: 4px 10px;
+    font-size: .75rem; color: var(--mid);
+  }
+
+  /* ── IDIOMAS ── */
+  .lang-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px; margin-top: 60px;
+  }
+  .lang-card {
+    background: var(--white); border-radius: 16px;
+    border: 1px solid rgba(13,43,78,.07);
+    padding: 32px; text-align: center;
+    box-shadow: 0 2px 12px rgba(13,43,78,.04);
+  }
+  .lang-flag { font-size: 2.2rem; margin-bottom: 12px; }
+  .lang-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem; font-weight: 700; color: var(--navy);
+  }
+  .lang-level { font-size: .82rem; color: var(--teal); margin-top: 6px; font-weight: 500; }
+  .lang-bar { margin-top: 16px; height: 4px; background: var(--sand); border-radius: 2px; overflow: hidden; }
+  .lang-fill { height: 100%; background: linear-gradient(90deg, var(--teal), var(--navy)); border-radius: 2px; transition: width 1.2s ease; width: 0; }
+
+  /* ── CONTATO ── */
+  #contato { background: var(--sand); text-align: center; }
+  #contato .section-title { max-width: 600px; margin: 0 auto 16px; }
+  #contato .section-sub   { margin: 0 auto 48px; }
+  .contact-cards {
+    display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;
+    margin-top: 48px;
+  }
+  .contact-card {
+    background: var(--white); border-radius: 14px;
+    border: 1px solid rgba(13,43,78,.07);
+    padding: 24px 32px; min-width: 200px;
+    text-decoration: none;
+    box-shadow: 0 2px 12px rgba(13,43,78,.04);
+    transition: transform .22s, box-shadow .22s, border-color .22s;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+  }
+  .contact-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(13,43,78,.1);
+    border-color: var(--teal);
+  }
+  .contact-card-icon { font-size: 1.6rem; }
+  .contact-card-label { font-size: .72rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--light); }
+  .contact-card-value { font-size: .88rem; color: var(--navy); font-weight: 500; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy); padding: 32px 60px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  footer p { font-size: .78rem; color: rgba(255,255,255,.35); }
+  footer span { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--teal); font-size: .9rem; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; }
+    section { padding: 70px 24px; }
+    .sobre-grid { grid-template-columns: 1fr; gap: 40px; }
+    .exp-item { grid-template-columns: 1fr; gap: 8px; }
+    .numeros-grid { grid-template-columns: repeat(2, 1fr); }
+    .skills-grid { grid-template-columns: 1fr; }
+    .lang-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 8px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">JV<span>.</span></div>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#experiencia">Experiência</a></li>
+    <li><a href="#numeros">Resultados</a></li>
+    <li><a href="#habilidades">Habilidades</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div>
+    <div class="hero-tag">Disponível para novas oportunidades</div>
+    <h1 class="hero-name">João Vitor<br><em>Miranda</em><br>Carvalho</h1>
+    <p class="hero-subtitle">
+      Customer Service Specialist com operações em 21 países. Atendimento LATAM em português, espanhol e inglês — aliando excelência no suporte à análise de dados e gestão de pagamentos multirregional.
+    </p>
+    <div class="hero-cta">
+      <a href="#contato" class="btn btn-primary">Entre em contato ↗</a>
+      <a href="#experiencia" class="btn btn-outline">Ver experiência</a>
+    </div>
+    <div class="hero-contact">
+      <a href="mailto:joaovitormirandacarvalho@gmail.com">✉ joaovitormirandacarvalho@gmail.com</a>
+      <a href="https://linkedin.com/in/joao-carvalho-a90915237" target="_blank">↗ linkedin.com/in/joao-carvalho</a>
+    </div>
+  </div>
+  <div class="hero-card reveal">
+    <p class="card-label">Performance · Offerwise · Out 2025–Presente</p>
+    <div class="metrics-grid">
+      <div class="metric-item">
+        <div class="metric-num">25<span class="accent">.480</span><span style="font-size:1.2rem">+</span></div>
+        <div class="metric-desc">Tickets gerenciados</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-num">92<span class="accent">,41</span><span style="font-size:1.1rem">%</span></div>
+        <div class="metric-desc">Resolution SLA</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-num">94<span class="accent">,59</span><span style="font-size:1.1rem">%</span></div>
+        <div class="metric-desc">1ª Resposta SLA</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-num">79<span class="accent">,97</span><span style="font-size:1.1rem">%</span></div>
+        <div class="metric-desc">FCR</div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <span class="card-footer-text">Maior volume individual da equipe</span>
+      <span class="card-badge">21 países</span>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div>
+    <span class="section-tag reveal">Quem sou</span>
+    <h2 class="section-title reveal">Um profissional que pensa<br>além do ticket</h2>
+    <p class="section-sub reveal">Construí minha carreira em Customer Service por acreditar que cada interação é uma oportunidade de gerar confiança — e dados.</p>
+  </div>
+  <div class="sobre-grid">
+    <div class="sobre-text reveal">
+      <p>Sou João Vitor, tenho 21 anos e trabalho com CS porque acredito genuinamente que uma boa experiência pode mudar a percepção de alguém sobre uma marca — e às vezes até sobre o próprio dia.</p>
+      <p>Na <strong>Offerwise</strong>, gerencio o maior volume de tickets da equipe em uma operação que envolve 21 países, três plataformas e múltiplas moedas. Meu diferencial não é só o volume — é a capacidade de enxergar padrões onde outros veem ruído.</p>
+      <p>Uso <strong>SQL no Metabase</strong> para identificar comportamentos, antecipo problemas antes que virem reclamação e transformo atendimento em insights acionáveis para Marketing e Produto.</p>
+      <p>Em paralelo, curso <strong>Psicologia</strong>, o que aprofunda minha leitura de comportamento humano, comunicação empática e escuta ativa — o coração de um CS realmente eficaz.</p>
+      <div class="sobre-pills">
+        <span class="pill">Análise de dados</span>
+        <span class="pill">Operações LATAM</span>
+        <span class="pill">Prevenção a fraudes</span>
+        <span class="pill">Gestão de SLA</span>
+        <span class="pill">Voz do cliente</span>
+        <span class="pill">Psicologia</span>
+      </div>
+    </div>
+    <div class="sobre-highlights">
+      <div class="highlight-card reveal">
+        <div class="hl-icon">🌎</div>
+        <div>
+          <div class="hl-title">Operação Internacional</div>
+          <div class="hl-text">Atendimento em 21 países via VocêOpina, QueOpinas e QueDices — português, espanhol e inglês fluente.</div>
+        </div>
+      </div>
+      <div class="highlight-card reveal">
+        <div class="hl-icon">📊</div>
+        <div>
+          <div class="hl-title">CS Analítico</div>
+          <div class="hl-text">SQL no Metabase para identificar padrões, antecipar problemas e gerar relatórios operacionais.</div>
+        </div>
+      </div>
+      <div class="highlight-card reveal">
+        <div class="hl-icon">🔒</div>
+        <div>
+          <div class="hl-title">Prevenção a Fraudes</div>
+          <div class="hl-text">Monitoramento de contas duplicadas, conflitos de IP e políticas de qualidade com impacto direto na saúde comercial.</div>
+        </div>
+      </div>
+      <div class="highlight-card reveal">
+        <div class="hl-icon">💸</div>
+        <div>
+          <div class="hl-title">Pagamentos Multirregionais</div>
+          <div class="hl-text">PayPal, Tango, Western Union e Tremendous em BRL, USD, EUR, MXN, COP e PEN.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIÊNCIA -->
+<section id="experiencia">
+  <span class="section-tag reveal">Trajetória</span>
+  <h2 class="section-title reveal">Experiência Profissional</h2>
+  <p class="section-sub reveal">Três empresas, três perspectivas diferentes da jornada do cliente — do suporte à estratégia.</p>
+
+  <div class="exp-list">
+    <div class="exp-item reveal">
+      <div class="exp-period">
+        <strong>Out 2025 — Presente</strong>
+        Belo Horizonte, MG<br>Operação Remota
+      </div>
+      <div>
+        <div class="exp-header">
+          <div class="exp-role">Customer Service Analyst</div>
+          <div class="exp-company">Offerwise</div>
+        </div>
+        <div class="exp-bullets">
+          <div class="exp-bullet">Atendimento B2C multicanal em PT, ES e EN — e-mail, Reclame Aqui, Trustpilot, App Store e Google Play</div>
+          <div class="exp-bullet">Maior volume individual da equipe: 25.480+ tickets em menos de um ano</div>
+          <div class="exp-bullet">Gestão de pagamentos multirregionais: PayPal, Tango, Western Union e Tremendous em 6 moedas</div>
+          <div class="exp-bullet">Prevenção a fraudes: contas duplicadas, conflitos de IP e padrões de baixa qualidade</div>
+          <div class="exp-bullet">Análise operacional via SQL/Metabase: padrões, bugs e oportunidades de melhoria</div>
+          <div class="exp-bullet">Criação de playbooks, FAQs e base de autoatendimento</div>
+          <div class="exp-bullet">Insights de Voz do Cliente para times de Marketing e Produto</div>
+          <div class="exp-bullet">Treinamento e onboarding de novos membros do CS</div>
+        </div>
+        <div class="exp-tags">
+          <span class="exp-tag">Freshdesk</span>
+          <span class="exp-tag">SQL / Metabase</span>
+          <span class="exp-tag">LATAM</span>
+          <span class="exp-tag">Fraudes</span>
+          <span class="exp-tag">Pagamentos</span>
+          <span class="exp-tag">SLA 92%+</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-period">
+        <strong>Mai — Out 2025</strong>
+        6 meses
+      </div>
+      <div>
+        <div class="exp-header">
+          <div class="exp-role">Analista de Customer Experience</div>
+          <div class="exp-company">Nerau CX</div>
+        </div>
+        <div class="exp-bullets">
+          <div class="exp-bullet">Suporte multicanal com foco em jornada e experiência do usuário</div>
+          <div class="exp-bullet">Mapeamento de pontos de fricção e proposição de melhorias</div>
+          <div class="exp-bullet">Coleta e análise de feedbacks para ciclos de melhoria contínua</div>
+        </div>
+        <div class="exp-tags">
+          <span class="exp-tag">CX</span>
+          <span class="exp-tag">Jornada do cliente</span>
+          <span class="exp-tag">Feedback</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-period">
+        <strong>Set 2023 — Jul 2024</strong>
+        1 ano e 2 meses
+      </div>
+      <div>
+        <div class="exp-header">
+          <div class="exp-role">Analista de Customer Success</div>
+          <div class="exp-company">Magazord Digital Commerce</div>
+        </div>
+        <div class="exp-bullets">
+          <div class="exp-bullet">Gestão de carteira B2B: onboarding, retenção e saúde da conta</div>
+          <div class="exp-bullet">Acompanhamento de churn, NPS e adoção de features com ações proativas</div>
+          <div class="exp-bullet">Treinamentos e implementação de soluções de e-commerce</div>
+        </div>
+        <div class="exp-tags">
+          <span class="exp-tag">B2B</span>
+          <span class="exp-tag">Onboarding</span>
+          <span class="exp-tag">Churn</span>
+          <span class="exp-tag">NPS</span>
+          <span class="exp-tag">E-commerce</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NÚMEROS -->
+<section id="numeros">
+  <span class="section-tag reveal">Resultados</span>
+  <h2 class="section-title reveal">Métricas que falam<br>por si só</h2>
+  <p class="section-sub reveal">Período: Outubro 2025 — Maio 2026 · Plataforma: Freshdesk · Offerwise</p>
+  <div class="numeros-grid">
+    <div class="numero-card reveal">
+      <div class="numero-val">25.480<span style="font-size:1.4rem">+</span></div>
+      <div class="numero-label">Tickets gerenciados<br>(maior da equipe)</div>
+    </div>
+    <div class="numero-card reveal">
+      <div class="numero-val">92,41<span style="font-size:1.4rem">%</span></div>
+      <div class="numero-label">Resolution SLA</div>
+    </div>
+    <div class="numero-card reveal">
+      <div class="numero-val">94,59<span style="font-size:1.4rem">%</span></div>
+      <div class="numero-label">1ª Resposta SLA</div>
+    </div>
+    <div class="numero-card reveal">
+      <div class="numero-val">79,97<span style="font-size:1.4rem">%</span></div>
+      <div class="numero-label">FCR<br>(First Contact Resolution)</div>
+    </div>
+    <div class="numero-card reveal">
+      <div class="numero-val">~4h13<span style="font-size:1.4rem">m</span></div>
+      <div class="numero-label">Tempo médio<br>1ª resposta</div>
+    </div>
+  </div>
+</section>
+
+<!-- HABILIDADES -->
+<section id="habilidades">
+  <span class="section-tag reveal">Stack</span>
+  <h2 class="section-title reveal">Ferramentas & Habilidades</h2>
+  <p class="section-sub reveal">Tecnologias e competências que uso no dia a dia para entregar resultados.</p>
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <div class="skill-icon">🎧</div>
+      <div class="skill-title">Suporte & CRM</div>
+      <div class="skill-items">
+        <span class="skill-item">Freshdesk</span>
+        <span class="skill-item">Salesforce</span>
+        <span class="skill-item">HubSpot</span>
+        <span class="skill-item">RD Station</span>
+        <span class="skill-item">Pipedrive</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">📈</div>
+      <div class="skill-title">Dados & Analytics</div>
+      <div class="skill-items">
+        <span class="skill-item">SQL – Metabase</span>
+        <span class="skill-item">Google Analytics</span>
+        <span class="skill-item">Microsoft Clarity</span>
+        <span class="skill-item">G Suite</span>
+        <span class="skill-item">Office 365</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">💳</div>
+      <div class="skill-title">Pagamentos</div>
+      <div class="skill-items">
+        <span class="skill-item">PayPal</span>
+        <span class="skill-item">Tango</span>
+        <span class="skill-item">Western Union</span>
+        <span class="skill-item">Tremendous</span>
+        <span class="skill-item">BRL · USD · EUR · MXN</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">⭐</div>
+      <div class="skill-title">Reputação Digital</div>
+      <div class="skill-items">
+        <span class="skill-item">Reclame Aqui</span>
+        <span class="skill-item">Trustpilot</span>
+        <span class="skill-item">App Store</span>
+        <span class="skill-item">Google Play</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🧠</div>
+      <div class="skill-title">Competências</div>
+      <div class="skill-items">
+        <span class="skill-item">Gestão de SLA</span>
+        <span class="skill-item">Prevenção a fraudes</span>
+        <span class="skill-item">Playbooks & FAQs</span>
+        <span class="skill-item">Voz do Cliente</span>
+        <span class="skill-item">Treinamento de equipes</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🎓</div>
+      <div class="skill-title">Formação & Certs</div>
+      <div class="skill-items">
+        <span class="skill-item">Psicologia – FAMINAS</span>
+        <span class="skill-item">CS Essential – CS Academy</span>
+        <span class="skill-item">Inbound Marketing & SEO</span>
+        <span class="skill-item">Storytelling</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:60px">
+    <span class="section-tag reveal">Idiomas</span>
+    <div class="lang-grid" style="margin-top:24px">
+      <div class="lang-card reveal">
+        <div class="lang-flag">🇧🇷</div>
+        <div class="lang-name">Português</div>
+        <div class="lang-level">Nativo</div>
+        <div class="lang-bar"><div class="lang-fill" data-width="100%"></div></div>
+      </div>
+      <div class="lang-card reveal">
+        <div class="lang-flag">🇪🇸</div>
+        <div class="lang-name">Espanhol</div>
+        <div class="lang-level">Avançado</div>
+        <div class="lang-bar"><div class="lang-fill" data-width="88%"></div></div>
+      </div>
+      <div class="lang-card reveal">
+        <div class="lang-flag">🇺🇸</div>
+        <div class="lang-name">Inglês</div>
+        <div class="lang-level">Intermediário</div>
+        <div class="lang-bar"><div class="lang-fill" data-width="60%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato">
+  <span class="section-tag reveal">Vamos conversar</span>
+  <h2 class="section-title reveal">Aberto a novos<br>desafios</h2>
+  <p class="section-sub reveal">Busco uma empresa que entenda o CS como parte estratégica do negócio. Se a voz do cliente guia as suas decisões, tenho muito a contribuir.</p>
+  <div class="contact-cards">
+    <a href="mailto:joaovitormirandacarvalho@gmail.com" class="contact-card reveal">
+      <div class="contact-card-icon">✉</div>
+      <div class="contact-card-label">E-mail</div>
+      <div class="contact-card-value">joaovitormirandacarvalho@gmail.com</div>
+    </a>
+    <a href="tel:+5547996638612" class="contact-card reveal">
+      <div class="contact-card-icon">📱</div>
+      <div class="contact-card-label">WhatsApp</div>
+      <div class="contact-card-value">(47) 99663-8612</div>
+    </a>
+    <a href="https://linkedin.com/in/joao-carvalho-a90915237" target="_blank" class="contact-card reveal">
+      <div class="contact-card-icon">💼</div>
+      <div class="contact-card-label">LinkedIn</div>
+      <div class="contact-card-value">joao-carvalho-a90915237</div>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 João Vitor Miranda Carvalho · Customer Service & CX</p>
+  <span>JV.</span>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        e.target.style.transitionDelay = (i % 4) * 0.08 + 's';
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Language bar animation
+  const langFills = document.querySelectorAll('.lang-fill');
+  const langObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.width = e.target.dataset.width;
+        langObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  langFills.forEach(el => langObserver.observe(el));
+
+  // Nav scroll effect
+  window.addEventListener('scroll', () => {
+    document.querySelector('nav').style.boxShadow =
+      window.scrollY > 40 ? '0 4px 24px rgba(13,43,78,.1)' : 'none';
+  });
+</script>
+</body>
+</html>
